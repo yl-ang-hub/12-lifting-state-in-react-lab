@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ",/App.css";
-import IngredientList from "./components/IngredientList/IngredientList";
+import "./App.css";
+import IngredientList from "./components/IngredientList/IngredientList.jsx";
 import BurgerStack from "./components/BurgerStack/BurgerStack";
 
 const App = () => {
@@ -20,15 +20,24 @@ const App = () => {
     { name: "Cheddar Cheese", color: "#FDE18B" },
     { name: "Swiss Cheese", color: "#F1E1A8" },
   ];
-
   const [stack, setStack] = useState([]);
+
+  const addToBurger = (idx) => {
+    setStack((prevState) => [...prevState, availableIngredients[idx]]);
+  };
+  const removeFromBurger = (idx) => {
+    setStack((prevState) => prevState.toSpliced(idx, 1));
+  };
 
   return (
     <main>
       <h1>Burger Stacker</h1>
       <section>
-        <IngredientList />
-        <BurgerStack />
+        <IngredientList
+          ingredients={availableIngredients}
+          addToBurger={addToBurger}
+        />
+        <BurgerStack burger={stack} removeFromBurger={removeFromBurger} />
       </section>
     </main>
   );
